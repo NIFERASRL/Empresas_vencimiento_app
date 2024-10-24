@@ -67,7 +67,7 @@ class Validaciones {
          Validaciones caracteres
         ----------------------*/
 
-        if (strlen($data['rncEmpresa']) !== 9 ){
+        if (strlen($data['rncEmpresa']) !== 9){
             $errores['rncEmpresa'] = 'Su RNC debe contener 9 caracteres';
         }
 

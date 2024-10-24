@@ -16,24 +16,22 @@ include 'connect.php';
 <body>
     <div class="container">
         <button type="button" onclick="window.location.href='registro_cliente.php';" class="btn btn-outline-success mb-3 mt-5">Registrar empresa</button>
-        </button>
 
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">RNC</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">tipo</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">Última actualización DGII</th>
                     <th scope="col">Vencimiento nombre comercial</th>
                     <th scope="col">Vencimiento registro mercantil</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-
                 <?php
-
-                $sql = "Select * from `Empresas`";
+                $sql = "SELECT * FROM `Empresas`";
                 $result = mysqli_query($con, $sql);
                 if ($result) {
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -54,18 +52,26 @@ include 'connect.php';
                             <td>' . $vencimientoNombreComercial . '</td>
                             <td>' . $vencimientoRegistroMercantil . '</td>
                             <td>
-                            <button class="btn btn-primary"><a href="update.php?updateid='.$id.'"class="text-light">Editar</a>
-                            </button>
-                            <button class="btn btn-danger"><a href="delete.php?deleteid='.$id.'" class="text-light">Eliminar</a>
-                            </button>
+                                <a href="update.php?updateid=' . $id . '" class="btn btn-primary text-light">Editar</a>
+                                <button class="btn btn-danger" onclick="confirmDelete(' . $id . ')">Eliminar</button>
                             </td>
-                            </tr>';
+                        </tr>';
                     }
                 }
                 ?>
             </tbody>
         </table>
     </div>
+
+    <!-- Script para mostrar confirmación antes de eliminar -->
+    <script>
+        function confirmDelete(id) {
+            let confirmation = confirm("¿Estás seguro de que deseas eliminar esta empresa?");
+            if (confirmation) {
+                window.location.href = "delete.php?deleteid=" + id;
+            }
+        }
+    </script>
 
 </body>
 

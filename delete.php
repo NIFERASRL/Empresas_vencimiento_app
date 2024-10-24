@@ -1,18 +1,17 @@
 <?php
 include 'connect.php';
-if(isset($_GET['deleteid'])){
+
+if (isset($_GET['deleteid'])) {
     $id = $_GET['deleteid'];
 
-    $sql = "delete from `Empresas` where id=$id";
+    // Ejecutar la eliminación
+    $sql = "DELETE FROM Empresas WHERE id = $id";
     $result = mysqli_query($con, $sql);
 
-    if($result){
+    if ($result) {
         header('location:display.php');
-    }else{
-        die(mysqli_error($con));
+    } else {
+        echo "Error al eliminar la empresa.";
     }
 }
-
-
-
 ?>
