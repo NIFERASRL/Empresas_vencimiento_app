@@ -67,8 +67,8 @@ class Validaciones {
          Validaciones caracteres
         ----------------------*/
 
-        if (strlen($data['rncEmpresa']) > 9){
-            $errores['rncEmpresa'] = 'Su RNC debe contener menos de 9 caracteres';
+        if (strlen($data['rncEmpresa']) !== 9 ){
+            $errores['rncEmpresa'] = 'Su RNC debe contener 9 caracteres';
         }
 
         /*----------------------
@@ -77,6 +77,10 @@ class Validaciones {
 
         if (!empty($data['vencimientoRegistroMercantil']) && $data['vencimientoRegistroMercantil'] <= date('Y-m-d')){
             $errores['vencimientoRegistroMercantil'] = 'La fecha de vencimiento no puede ser menor a la fecha actual';
+        };
+
+        if (!empty($data['vencimientoNombreComercial']) && $data['vencimientoNombreComercial'] <= date('Y-m-d')){
+            $errores['vencimientoNombreComercial'] = 'La fecha de vencimiento no puede ser menor a la fecha actual';
         };
 
 
