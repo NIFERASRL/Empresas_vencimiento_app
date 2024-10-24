@@ -94,7 +94,9 @@ if ($_SERVER['REQUEST_METHOD']== 'POST' && isset($_POST['submit'])) {
                 <div class="form-group">
                     <label>Actividad de la empresa</label>
                     <input type="text" name="actividadEmpresa" class="form-control" placeholder="Insertar actividad de empresa"
-                        autocomplete="off">
+                        autocomplete="off"
+                    value="<?= htmlspecialchars($data['actividadEmpresa'] ?? '') ?>">
+                        <span class="text-danger"><?= $errores['actividadEmpresa'] ?? '' ?></span>
                 </div>
                 <div class="form-group">
                     <label>Correo electrónico empresarial</label>
@@ -104,7 +106,9 @@ if ($_SERVER['REQUEST_METHOD']== 'POST' && isset($_POST['submit'])) {
                 </div>
                 <div class="form-group">
                     <label>Fecha de constitución</label>
-                    <input type="date" name="fechaConstitucion" class="form-control" autocomplete="off">
+                    <input type="date" name="fechaConstitucion" class="form-control"
+                        autocomplete="off" value="<?= htmlspecialchars($data['fechaConstitucion'] ?? '') ?>">
+                        <span class="text-danger"><?= $errores['fechaConstitucion'] ?? '' ?></span>
                 </div>
                 <div class="form-group">
                     <label>Número telefónico empresarial</label>
@@ -114,15 +118,21 @@ if ($_SERVER['REQUEST_METHOD']== 'POST' && isset($_POST['submit'])) {
                 </div>
                 <div class="form-group">
                     <label>Vencimiento del nombre comercial</label>
-                    <input type="date" name="vencimientoNombreComercial" class="form-control" autocomplete="off">
+                    <input type="date" name="vencimientoNombreComercial" class="form-control" autocomplete="off" 
+                    value="<?= htmlspecialchars($data['vencimientoNombreComercial'] ?? '') ?>">
+                        <span class="text-danger"><?= $errores['vencimientoNombreComercial'] ?? '' ?></span>
                 </div>
                 <div class="form-group">
                     <label>Vencimiento del registro comercial</label>
-                    <input type="date" name="vencimientoRegistroMercantil" class="form-control" autocomplete="off">
+                    <input type="date" name="vencimientoRegistroMercantil" class="form-control" autocomplete="off" 
+                    value="<?= htmlspecialchars($data['vencimientoRegistroMercantil'] ?? '') ?>">
+                        <span class="text-danger"><?= $errores['vencimientoRegistroMercantil'] ?? '' ?></span>
                 </div>
                 <div class="form-group">
                     <label>Última actualización DGII</label>
-                    <input type="date" name="ultimaActualizacionDGII" class="form-control" autocomplete="off">
+                    <input type="date" name="ultimaActualizacionDGII" class="form-control" autocomplete="off" 
+                    value="<?= htmlspecialchars($data['ultimaActualizacionDGII'] ?? '') ?>">
+                        <span class="text-danger"><?= $errores['ultimaActualizacionDGII'] ?? '' ?></span>
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary">Registrar empresa</button>
                 <button type="button" onclick="window.location.href='display.php';" class="btn btn-danger">Volver</button>

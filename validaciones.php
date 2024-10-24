@@ -4,35 +4,81 @@ class Validaciones {
     public static function validar($data) {
         $errores = [];
 
-        // Validar que el nombre de la empresa no esté vacío
+        /*---------------------------
+         Validaciones de campos vacíos
+        ----------------------------*/
+
         if (empty($data['nombreEmpresa'])) {
-            $errores['nombreEmpresa'] = 'El nombre de la empresa es obligatorio.';
+            $errores['nombreEmpresa'] = 'El nombre de la empresa no se puede quedar vacío';
         }
 
         if (empty($data['rncEmpresa'])) {
-            $errores['rncEmpresa'] = 'El RNC de la empresa es obligatorio.';
+            $errores['rncEmpresa'] = 'El RNC de la empresa no se puede quedar vacío.';
         }
 
-        // Validar que el tipo de empresa haya sido seleccionado
         if (empty($data['tipoEmpresa'])) {
             $errores['tipoEmpresa'] = 'Debe seleccionar un tipo de empresa.';
         }
 
-        // Validar que el campo correo no se haya quedado vacío y Validar el correo electrónico escrito correctamente.
+        if (empty($data['actividadEmpresa'])) {
+            $errores['actividadEmpresa'] = 'La actividad de la empresa no se puede quedar vacío.';
+        }
+
         if (empty($data['correoEmpresa'])) {
-            $errores['correoEmpresa'] = 'Favor insertar una dirección de correo electrónico';
-        } elseif (!filter_var($data['correoEmpresa'], FILTER_VALIDATE_EMAIL)) {
+            $errores['correoEmpresa'] = 'La dirección de correo electrónico no se puede quedar vacío.';
+        }
+
+        if (empty($data['fechaConstitucion'])) {
+            $errores['fechaConstitucion'] = 'La fecha de constitución no se puede quedar vacío';
+        }
+
+        if (empty($data['numeroEmpresa'])) {
+            $errores['numeroEmpresa'] = 'El número de la empresa no se puede quedar vacío';
+        } 
+
+        if (empty($data['vencimientoNombreComercial'])) {
+            $errores['vencimientoNombreComercial'] = 'El vencimiento del nombre comercial no se puede quedar vacío';
+        } 
+        
+        if (empty($data['vencimientoRegistroMercantil'])) {
+            $errores['vencimientoRegistroMercantil'] = 'El vencimiento del registro mercantil no se puede quedar vacío';
+        }
+
+        if (empty($data['ultimaActualizacionDGII'])) {
+            $errores['ultimaActualizacionDGII'] = 'La última actualización en DGII no se puede quedar vacío';
+        } 
+
+
+        /*----------------------
+         Validaciones formato
+        ----------------------*/
+
+
+        if (!filter_var($data['correoEmpresa'], FILTER_VALIDATE_EMAIL)) {
             $errores['correoEmpresa'] = 'El correo electrónico no es válido.';
         }
 
         //  Validar que el campo teléfono no se haya quedado vacío y validar que el número telefónico sea válido.
-        if (empty($data['numeroEmpresa'])) {
-            $errores['numeroEmpresa'] = 'Favor insertar un número telefónico';
-        } elseif (!preg_match('/^\+?[0-9]{1,3}\s?\(?[0-9]{3}\)?\s?[0-9]{3}-?[0-9]{4}$/', $data['numeroEmpresa'])) {
+        elseif (!preg_match('/^\+?[0-9]{1,3}\s?\(?[0-9]{3}\)?\s?[0-9]{3}-?[0-9]{4}$/', $data['numeroEmpresa'])) {
             $errores['numeroEmpresa'] = 'El número telefónico no es válido.';
         }
 
-        // Puedes agregar más validaciones según sea necesario (fechas, actividades, etc.)
+        /*----------------------
+         Validaciones caracteres
+        ----------------------*/
+
+        if (strlen($data['rncEmpresa']) > 9){
+            $errores['rncEmpresa'] = 'Su RNC debe contener menos de 9 caracteres';
+        }
+
+        /*----------------------
+         Validaciones de fechas
+        ----------------------*/
+
+        if (!empty($data['vencimientoRegistroMercantil']) && $data['vencimientoRegistroMercantil'] <= date('Y-m-d')){
+            $errores['vencimientoRegistroMercantil'] = 'La fecha de vencimiento no puede ser menor a la fecha actual';
+        };
+
 
         return $errores;
     }
