@@ -46,11 +46,6 @@ class Validaciones
             $errores['vencimientoRegistroMercantil'] = 'El vencimiento del registro mercantil no se puede quedar vacío';
         }
 
-        if (empty($data['ultimaActualizacionDGII'])) {
-            $errores['ultimaActualizacionDGII'] = 'La última actualización en DGII no se puede quedar vacío';
-        }
-
-
         /*----------------------
          Validaciones formato
         ----------------------*/
