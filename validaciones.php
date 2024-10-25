@@ -1,7 +1,9 @@
 <?php
 
-class Validaciones {
-    public static function validar($data) {
+class Validaciones
+{
+    public static function validar($data)
+    {
         $errores = [];
 
         /*---------------------------
@@ -34,19 +36,19 @@ class Validaciones {
 
         if (empty($data['numeroEmpresa'])) {
             $errores['numeroEmpresa'] = 'El número de la empresa no se puede quedar vacío';
-        } 
+        }
 
         if (empty($data['vencimientoNombreComercial'])) {
             $errores['vencimientoNombreComercial'] = 'El vencimiento del nombre comercial no se puede quedar vacío';
-        } 
-        
+        }
+
         if (empty($data['vencimientoRegistroMercantil'])) {
             $errores['vencimientoRegistroMercantil'] = 'El vencimiento del registro mercantil no se puede quedar vacío';
         }
 
         if (empty($data['ultimaActualizacionDGII'])) {
             $errores['ultimaActualizacionDGII'] = 'La última actualización en DGII no se puede quedar vacío';
-        } 
+        }
 
 
         /*----------------------
@@ -58,30 +60,33 @@ class Validaciones {
             $errores['correoEmpresa'] = 'El correo electrónico no es válido.';
         }
 
-        //  Validar que el campo teléfono no se haya quedado vacío y validar que el número telefónico sea válido.
-        elseif (!preg_match('/^\+?[0-9]{1,3}\s?\(?[0-9]{3}\)?\s?[0-9]{3}-?[0-9]{4}$/', $data['numeroEmpresa'])) {
-            $errores['numeroEmpresa'] = 'El número telefónico no es válido.';
-        }
-
         /*----------------------
          Validaciones caracteres
         ----------------------*/
 
-        if (strlen($data['rncEmpresa']) !== 9){
-            $errores['rncEmpresa'] = 'Su RNC debe contener 9 caracteres';
+        if ($data['tipoEmpresa'] === 'PERSONA FÍSICA') {
+            if (strlen($data['rncEmpresa']) !== 11) {
+                $errores['rncEmpresa'] = 'El RNC para una Persona Física debe contener 11 caracteres';
+            }
+        } else {
+            if (strlen($data['rncEmpresa']) !== 9) {
+                $errores['rncEmpresa'] = 'El RNC para una empresa debe contener 9 caracteres';
+            }
         }
 
         /*----------------------
          Validaciones de fechas
         ----------------------*/
 
-        if (!empty($data['vencimientoRegistroMercantil']) && $data['vencimientoRegistroMercantil'] <= date('Y-m-d')){
+        if (!empty($data['vencimientoRegistroMercantil']) && $data['vencimientoRegistroMercantil'] <= date('Y-m-d')) {
             $errores['vencimientoRegistroMercantil'] = 'La fecha de vencimiento no puede ser menor a la fecha actual';
-        };
+        }
+        ;
 
-        if (!empty($data['vencimientoNombreComercial']) && $data['vencimientoNombreComercial'] <= date('Y-m-d')){
+        if (!empty($data['vencimientoNombreComercial']) && $data['vencimientoNombreComercial'] <= date('Y-m-d')) {
             $errores['vencimientoNombreComercial'] = 'La fecha de vencimiento no puede ser menor a la fecha actual';
-        };
+        }
+        ;
 
 
         return $errores;

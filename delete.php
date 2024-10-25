@@ -14,4 +14,3 @@ if (isset($_GET['deleteid'])) {
         echo "Error al eliminar la empresa.";
     }
 }
-?>
