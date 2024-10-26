@@ -5,7 +5,7 @@ include 'validaciones.php';
 if ($_SERVER['REQUEST_METHOD']== 'POST' && isset($_POST['submit'])) {
     // Capturar datos y sanitizarlos
     $data = [
-
+        
         'nombreEmpresa' => htmlspecialchars($_POST['nombreEmpresa']),
         'rncEmpresa' => htmlspecialchars($_POST['rncEmpresa']),
         'tipoEmpresa' => htmlspecialchars($_POST['tipoEmpresa']),

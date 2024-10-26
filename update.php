@@ -28,7 +28,8 @@ $ultimaActualizacionDGII_holder =$row['ultima_actualizacion_dgii'];
 if (isset($_POST['submit'])) {
   
     $data = [
-
+        
+        'id' => $id,
         'nombreEmpresa' => htmlspecialchars($_POST['nombreEmpresa']),
         'rncEmpresa' => htmlspecialchars($_POST['rncEmpresa']),
         'tipoEmpresa' => htmlspecialchars($_POST['tipoEmpresa']),
@@ -44,6 +45,7 @@ if (isset($_POST['submit'])) {
 
 
     // Validar los datos
+    $data['id'] = $id; 
     $errores = Validaciones::validar($data);
 
 

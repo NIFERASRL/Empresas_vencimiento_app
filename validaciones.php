@@ -1,9 +1,11 @@
 <?php
+include 'connect.php';
 
 class Validaciones
 {
     public static function validar($data)
     {
+        global $con;
         $errores = [];
 
         /*---------------------------
@@ -50,7 +52,6 @@ class Validaciones
          Validaciones formato
         ----------------------*/
 
-
         if (!filter_var($data['correoEmpresa'], FILTER_VALIDATE_EMAIL)) {
             $errores['correoEmpresa'] = 'El correo electrónico no es válido.';
         }
@@ -73,15 +74,42 @@ class Validaciones
          Validaciones de fechas
         ----------------------*/
 
-        if (!empty($data['vencimientoRegistroMercantil']) && $data['vencimientoRegistroMercantil'] <= date('Y-m-d')) {
+        if (!empty($data['vencimientoRegistroMercantil']) && $data['vencimientoRegistroMercantil'] < date('Y-m-d')) {
             $errores['vencimientoRegistroMercantil'] = 'La fecha de vencimiento no puede ser menor a la fecha actual';
         }
-        ;
+        
 
-        if (!empty($data['vencimientoNombreComercial']) && $data['vencimientoNombreComercial'] <= date('Y-m-d')) {
+        if (!empty($data['vencimientoNombreComercial']) && $data['vencimientoNombreComercial'] < date('Y-m-d')) {
             $errores['vencimientoNombreComercial'] = 'La fecha de vencimiento no puede ser menor a la fecha actual';
         }
-        ;
+
+        /*-------------------------
+         Validaciones de duplicidad
+        -------------------------*/
+
+        if (isset($data['nombreEmpresa'])) {
+            $id = isset($data['id']) ? (int) $data['id'] : 0; // ID de la empresa a editar, si existe
+            $nombreEmpresa = mysqli_real_escape_string($con, $data['nombreEmpresa']);
+    
+            $sql = "SELECT * FROM `Empresas` WHERE nombre_empresa = '$nombreEmpresa' AND id != $id";
+            $result = mysqli_query($con, $sql);
+    
+            if ($result && mysqli_num_rows($result) > 0) {
+                $errores['nombreEmpresa'] = 'El nombre de la empresa ya existe en otra empresa.';
+            }
+        }
+
+        if (isset($data['rcnEmpresa'])) {
+            $id = isset($data['id']) ? (int) $data['id'] : 0; // ID de la empresa a editar, si existe
+            $rncEmpresa = mysqli_real_escape_string($con, $data['rcnEmpresa']);
+    
+            $sql = "SELECT * FROM `Empresas` WHERE rnc_empresa = '$rncEmpresa' AND id != $id";
+            $result = mysqli_query($con, $sql);
+    
+            if ($result && mysqli_num_rows($result) > 0) {
+                $errores['rcnEmpresa'] = 'El RNC de la empresa ya existe en otra empresa.';
+            }
+        }
 
 
         return $errores;
