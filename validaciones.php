@@ -99,15 +99,15 @@ class Validaciones
             }
         }
 
-        if (isset($data['rcnEmpresa'])) {
+        if (isset($data['rncEmpresa'])) {
             $id = isset($data['id']) ? (int) $data['id'] : 0; // ID de la empresa a editar, si existe
-            $rncEmpresa = mysqli_real_escape_string($con, $data['rcnEmpresa']);
+            $rncEmpresa = mysqli_real_escape_string($con, $data['rncEmpresa']);
     
             $sql = "SELECT * FROM `Empresas` WHERE rnc_empresa = '$rncEmpresa' AND id != $id";
             $result = mysqli_query($con, $sql);
     
             if ($result && mysqli_num_rows($result) > 0) {
-                $errores['rcnEmpresa'] = 'El RNC de la empresa ya existe en otra empresa.';
+                $errores['rncEmpresa'] = 'El RNC de la empresa ya existe en otra empresa.';
             }
         }
 
